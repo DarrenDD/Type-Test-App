@@ -25,43 +25,45 @@ const renderNewQuote = async() =>{
 
 //Logic to compare input words with quote
 userInput.addEventListener("input", () => {
-    let quoteChars = document.querySelectorAll("quote-Chars");
+    let quoteChars = document.querySelectorAll(".quote-chars");
     quoteChars = Array.from(quoteChars);
 
     //Array of user input chars
     let userInputChars = userInput.value.split("");
     //Loop through each char in quote
-    quoteChars.forEach((char, index)=>{
-        //check chars with quote chars
-        if(char.innerText == userInputChars[index]){
+    quoteChars.forEach((char, index) => {
+        //Check chars with quote chars
+        if (char.innerText == userInputChars[index]) {
             char.classList.add("success");
         }
-        //if user hasnt entered anything or backspaced
-        else if(userInputChars[index] == null){
-            if(char.classList.contains("success")){
+        //If user hasn't entered anything or backspaced
+        else if (userInputChars[index] == null) {
+            if (char.classList.contains("success")) {
                 char.classList.remove("success");
-            }else{
+            } else {
                 char.classList.remove("fail");
             }
         }
-        //if user enter wrong char
-        else{
-            if(!char.classList.contains("fail")){
-                //increment and display mistakes
+        //if user entered wrong char
+        else {
+            if (!char.classList.contains("fail")) {
+                //increament and displaying mistakes
                 mistakes++;
                 char.classList.add("fail");
             }
             document.getElementById("mistakes").innerText = mistakes;
         }
-        //return true if all chars are correct
-        let check = quoteChars.every((Element) =>{
-            return Element.classList.contains("success");
+
+        //Return true if all chars are correct
+        let check = quoteChars.every((element) => {
+            return element.classList.contains("success");
         });
 
-        //end test if all chars are correct
-        if(check){
+        //End test if all chars are correct
+        if (check) {
             displayResult();
         }
+
     });
 
 });
@@ -87,14 +89,12 @@ const displayResult = () =>{
     clearInterval(timer);
     document.getElementById("stop-test").style.display = "none";
     userInput.disabled = true;
-    let timerTaken = 1;
-    if(timer != 0){
-        timerTaken = (60 - time) / 100;
+    let timeTaken = 1;
+    if(time != 0){
+        timeTaken = (60 - time) / 100;
     }
-    document.getElementById("wpm").innerText = (userInput
-        .value.length / 5 /timerTaken).toFixed(2) + "wpm";
-    document.getElementById("accuracy").innerText = Math.round(((userInput.value.length - mistakes) 
-    / userInput.value.length) * 100) + "%";
+    document.getElementById("wpm").innerText = (userInput.value.length / 5 /timeTaken).toFixed(2) + "wpm";
+    document.getElementById("accuracy").innerText = Math.round(((userInput.value.length - mistakes) / userInput.value.length) * 100) + "%";
 
 }
 
